@@ -1,0 +1,14 @@
+fireq_release: "0.1.0-docs-preview"
+
+repositories:
+  client:
+    repository: "vlsi-nanocomputing/FIREQ-Client"
+    ref: "docs/initial_doc"
+
+  firmware:
+    repository: "vlsi-nanocomputing/FIREQ"
+    ref: "docs/initial_doc"
+
+  server:
+    repository: "vlsi-nanocomputing/FIREQ-Server"
+    ref: "docs/initial_doc"
