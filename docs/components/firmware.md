@@ -1,6 +1,7 @@
 # FIREQ Firmware
 
-FIREQ firmware contains the HDL and board-level logic of the FIREQ platform.
+```{toctree}
+:maxdepth: 2
 
-This section will include the documentation stored in the `FIREQ/docs/`
-directory.
+../imported/firmware/index
+```
