@@ -25,30 +25,6 @@ jobs:
         with:
           path: FIREQ-docs
 
-      - name: Checkout FIREQ-Client
-        uses: actions/checkout@v4
-        with:
-          repository: vlsi-nanocomputing/FIREQ-Client
-          ref: docs/initial_doc
-          path: FIREQ-Client
-          token: ${{ secrets.FIREQ_DOCS_PAT }}
-
-      - name: Checkout FIREQ firmware
-        uses: actions/checkout@v4
-        with:
-          repository: vlsi-nanocomputing/FIREQ
-          ref: docs/initial_doc
-          path: FIREQ
-          token: ${{ secrets.FIREQ_DOCS_PAT }}
-
-      - name: Checkout FIREQ-Server
-        uses: actions/checkout@v4
-        with:
-          repository: vlsi-nanocomputing/FIREQ-Server
-          ref: docs/initial_doc
-          path: FIREQ-Server
-          token: ${{ secrets.FIREQ_DOCS_PAT }}
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -59,6 +35,59 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Read integrated release manifest
+        id: release
+        working-directory: FIREQ-docs
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import yaml
+
+          with open("fireq-release.yaml", "r", encoding="utf-8") as f:
+              data = yaml.safe_load(f)
+
+          print(f"fireq_release={data['fireq_release']}")
+
+          print(f"client_repo={data['repositories']['client']['repository']}")
+          print(f"client_ref={data['repositories']['client']['ref']}")
+
+          print(f"firmware_repo={data['repositories']['firmware']['repository']}")
+          print(f"firmware_ref={data['repositories']['firmware']['ref']}")
+
+          print(f"server_repo={data['repositories']['server']['repository']}")
+          print(f"server_ref={data['repositories']['server']['ref']}")
+          PY
+
+      - name: Show integrated release
+        run: |
+          echo "FIREQ release: ${{ steps.release.outputs.fireq_release }}"
+          echo "Client:   ${{ steps.release.outputs.client_repo }} @ ${{ steps.release.outputs.client_ref }}"
+          echo "Firmware: ${{ steps.release.outputs.firmware_repo }} @ ${{ steps.release.outputs.firmware_ref }}"
+          echo "Server:   ${{ steps.release.outputs.server_repo }} @ ${{ steps.release.outputs.server_ref }}"
+
+      - name: Checkout FIREQ-Client
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.release.outputs.client_repo }}
+          ref: ${{ steps.release.outputs.client_ref }}
+          path: FIREQ-Client
+          token: ${{ secrets.FIREQ_DOCS_PAT }}
+
+      - name: Checkout FIREQ firmware
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.release.outputs.firmware_repo }}
+          ref: ${{ steps.release.outputs.firmware_ref }}
+          path: FIREQ
+          token: ${{ secrets.FIREQ_DOCS_PAT }}
+
+      - name: Checkout FIREQ-Server
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.release.outputs.server_repo }}
+          ref: ${{ steps.release.outputs.server_ref }}
+          path: FIREQ-Server
+          token: ${{ secrets.FIREQ_DOCS_PAT }}
 
       - name: Synchronize component documentation
         working-directory: FIREQ-docs
