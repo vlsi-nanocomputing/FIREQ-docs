@@ -6,6 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+  repository_dispatch:
+    types:
+      - fireq-component-docs-updated
+
 permissions:
   contents: read
   pages: write
