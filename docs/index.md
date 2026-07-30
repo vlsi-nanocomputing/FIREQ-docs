@@ -42,17 +42,17 @@ To be completed with the final step-by-step instructions for hardware setup and 
 
 The documentation is organized as follows:
 
-- **[Client Documentation](components/client.md)**: for experiment setup, commands, plots, and output handling.
-- **[Server Documentation](components/server.md)**: for deployment, environment setup, and runtime usage.
-- **[Firmware Documentation](components/firmware.md)**: for hardware-specific details and implementation guidance.
+- **[Client Documentation](imported/client/index.md)**: for experiment setup, commands, plots, and output handling.
+- **[Server Documentation](imported/server.md)**: for deployment, environment setup, and runtime usage.
+- **[Firmware Documentation](imported/firmware.md)**: for hardware-specific details and implementation guidance.
 
 ```{toctree}
 :maxdepth: 2
 :hidden:
 
-components/client
-components/server
-components/firmware
+imported/client/index
+imported/server
+imported/firmware
 ```
 
 ## Project Links
