@@ -3,7 +3,7 @@
 The FPGA Instrumentation for Readout and Qubit control (FIREQ) is a flexible platform for quantum-control experiments built around RFSoC hardware. It combines a high-level interface, a runtime service, and custom firmware into a unified workflow for generating signals, acquiring data, and coordinating complex experiment sequences with low latency.
 
 <!-- EXAMPLE OF IMAGE HERE: High-level system block diagram or FIREQ logo -->
-![FIREQ System Overview](../graphics/fireq_system_overview.png)
+![FIREQ System Overview](../graphics/fireq_architecture.png)
 
 ## What is FIREQ?
 
