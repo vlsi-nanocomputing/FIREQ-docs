@@ -7,8 +7,8 @@ repositories:
 
   firmware:
     repository: "vlsi-nanocomputing/FIREQ"
-    ref: "docs/initial_doc"
+    ref: "docs/v0.1.0-init"
 
   server:
     repository: "vlsi-nanocomputing/FIREQ-Server"
-    ref: "docs/initial_doc"
+    ref: "docs/v0.1.0-init"
