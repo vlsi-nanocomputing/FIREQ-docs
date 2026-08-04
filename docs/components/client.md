@@ -3,5 +3,5 @@
 ```{toctree}
 :maxdepth: 2
 
-../imported/client/index
+../repos/FIREQ-Client/docs/index
 ```

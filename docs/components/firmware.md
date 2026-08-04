@@ -3,5 +3,5 @@
 ```{toctree}
 :maxdepth: 2
 
-../imported/firmware/index
+../repos/FIREQ/docs/index
 ```

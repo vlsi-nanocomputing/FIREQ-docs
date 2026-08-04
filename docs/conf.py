@@ -33,3 +33,24 @@ myst_enable_extensions = [
     "deflist",
     "dollarmath",
 ]
+
+exclude_patterns = [
+    "_build",
+    "Thumbs.db",
+    ".DS_Store",
+
+    # Legacy generated import directory.
+    "imported/**",
+
+    # Generated repository staging area.
+    # README files outside component docs trees are available for include
+    # directives but should not be treated as standalone Sphinx pages.
+    "repos/*/README.md",
+    "repos/*/readme.md",
+    "repos/*/README.rst",
+    "repos/*/readme.rst",
+    "repos/*/**/README.md",
+    "repos/*/**/readme.md",
+    "repos/*/**/README.rst",
+    "repos/*/**/readme.rst",
+]
