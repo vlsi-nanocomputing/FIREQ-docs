@@ -21,9 +21,9 @@ FIREQ is composed of three main components:
 Explore the documentation sections to get started or dive deep into specific components:
 
 * **[Getting Started & Quick Start](getting_started.md)**: Board setup, SD card preparation, and your first experiment run.
-* **[Client Documentation](components/client.md)**: Experiment definitions, plotting, and command reference.
-* **[Server Documentation](components/server.md)**: Deployment, Hardware API/Driver layer, and runtime usage.
-* **[Firmware Documentation](components/firmware.md)**: FPGA architecture, AXI interfaces, and register mapping.
+* **[Client Documentation](./repos/FIREQ-Client/docs/index)**: Experiment definitions, plotting, and command reference.
+* **[Server Documentation](./repos/FIREQ-Server/docs/index)**: Deployment, Hardware API/Driver layer, and runtime usage.
+* **[Firmware Documentation](./repos/FIREQ/docs/index)**: FPGA architecture, AXI interfaces, and register mapping.
 * **[Project Info & Paper](project_info.md)**: Publications, repository links, and support channels.
 
 ```{toctree}
@@ -31,7 +31,7 @@ Explore the documentation sections to get started or dive deep into specific com
 :hidden:
 
 getting_started
-components/client
-components/server
-components/firmware
+./repos/FIREQ-Client/docs/index
+./repos/FIREQ-Server/docs/index
+./repos/FIREQ/docs/index
 project_info
