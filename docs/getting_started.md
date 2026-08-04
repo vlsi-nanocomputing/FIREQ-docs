@@ -6,8 +6,8 @@ This guide provides a step-by-step entry point for bringing up the FIREQ platfor
 
 1. Review the overall system architecture in the [Index](index.md).
 2. Configure and deploy the target hardware using the steps below.
-3. Refer to the [Server Documentation](components/server.md) for environment setup, deployment, and service configuration.
-4. Use the [Client Documentation](components/client.md) for local installation, API guidelines, and experiment execution.
+3. Refer to the [Server Documentation](repos/FIREQ-Server/docs/index.md) for environment setup, deployment, and service configuration.
+4. Use the [Client Documentation](repos/FIREQ-Client/docs/index.md) for local installation, API guidelines, and experiment execution.
 ---
 
 ## Quick Start Guide
@@ -25,11 +25,11 @@ Establish network access to the board (via SSH or Ethernet) and verify that the 
 TO DO
 
 ### 4. First Run
-1. Start the [FIREQ-Server](components/server.md) process on the board.
+1. Start the [FIREQ-Server](repos/FIREQ-Server/docs/index.md) process on the board.
 ```bash
 python API.py
 ```
-2. Launch the [FIREQ-Client](components/client.md) on your host PC:
+2. Launch the [FIREQ-Client](repos/FIREQ-Client/docs/index.md) on your host PC:
 ```bash
 python run_client.py
 ```
