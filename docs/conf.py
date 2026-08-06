@@ -15,6 +15,9 @@ server_src = ROOT / "docs" / "repos" / "FIREQ-Server"
 if server_src.exists():
     sys.path.insert(0, str(server_src))
 
+client_src = ROOT / "docs" / "repos" / "FIREQ-Client"
+if client_src.exists():
+    sys.path.insert(0, str(client_src))
 
     
 release_file = ROOT / "fireq-release.yaml"
@@ -52,8 +55,12 @@ autosummary_generate = True
 autodoc_mock_imports = [
     "pynq",
     "msgpack",
+    "tqdm",
     "anytree",
+    "pandas",
+    "prompt_toolkit",
     "xrfclk",
+    "matplotlib",
     "xrfdc",
     "cffi",
     "psutil",
