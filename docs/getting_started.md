@@ -79,60 +79,7 @@ To run FIREQ, your Micro-SD card (16 GB or larger) must be flashed with the appr
 ---
 
 ## Server Deployment & Execution
-
-### 1. Deployment to Target Board
-Transfer the `FIREQ-Server` project folder along with the FPGA overlay artifacts (`.bit` and matching `.hwh` files) onto the target Linux filesystem:
-
-```bash
-scp -r /path/to/FIREQ-Server xilinx@<board-ip>:/home/xilinx/
-```
-
-> **Note**: Ensure that the target FPGA `.bit` and matching `.hwh` hardware handoff files reside under `/home/xilinx/` or inside the project root directory.
-
-### 2. Environment Setup & SSH Access
-
-1. Connect to the board via SSH:
-
-```bash
-ssh xilinx@<board-ip>
-```
-2. Acquire root privileges (required for PYNQ direct memory-mapped access and hardware registers):
-
-
-```bash
-sudo -i
-```
-3. Activate the system PYNQ virtual environment:
-
-```bash
-source /etc/profile.d/pynq_venv.sh
-```
-4. Install/update server dependencies if needed:
-
-
-```bash
-cd /home/xilinx/FIREQ-Server
-pip install -r requirements.txt
-```
-
-### 3. Interactive Startup Sequence
-Launch the server using the main entry point script:
-
-
-```bash
-python API.py
-```
-
-Upon execution, `API.py` starts an interactive prompt setup:
-
-- **Logging level**: Type `debug` or press `Enter` for default `info`.
-- **Overlay filename**: Enter the bitstream filename relative to `/home/xilinx/` (press `Enter` for default `overlay.bit`). The matching `.hwh` file must reside in the same directory.
-- **Server host**: Define the listening interface (press `Enter` for `0.0.0.0` to bind all network interfaces).
-- **Server port**: Define the TCP port (press `Enter` for `5000`).
-- **Auth token**: Define the secret security token (press `Enter` for default `"fireq"`).
-Once inputs are accepted, `FIREQServer` loads the FPGA overlay, initializes memory-mapped registers, binds the socket, and launches the worker threads (`ReceiveWorker` and `SendWorker`).
-
-> To stop the server safely without leaving hardware registers in uninitialized states, press `Ctrl+C` (`KeyboardInterrupt`).
+Refer to [Server](repos/FIREQ-Server/docs/server.md)
 
 ## Client Execution & Workflow
 Once the server is running on the board, launch the client on your local workstation.
