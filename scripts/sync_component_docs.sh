@@ -12,6 +12,8 @@ mkdir -p docs/repos/FIREQ-Server
 sync_repo_docs() {
   local src="$1"
   local dst="$2"
+  shift 2
+  local extra_includes=("$@")
 
   echo "  ${src} -> ${dst}"
 
@@ -29,6 +31,8 @@ sync_repo_docs() {
     --include='*.gif' \
     --include='*.pdf' \
     --include='*.drawio' \
+    --include='*.py' \
+    "${extra_includes[@]}" \
     --exclude='*' \
     "${src}/" "${dst}/"
 }

@@ -1,12 +1,22 @@
+import sys
 from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
+    
 
 project = "FIREQ"
 author = "QNANO - Politecnico di Torino"
 copyright = "2026, QNANO - Politecnico di Torino"
 
+
+
+server_src = ROOT / "docs" / "repos" / "FIREQ-Server"
+if server_src.exists():
+    sys.path.insert(0, str(server_src))
+
+
+    
 release_file = ROOT / "fireq-release.yaml"
 if release_file.exists():
     with release_file.open("r", encoding="utf-8") as f:
@@ -19,7 +29,40 @@ extensions = [
     "myst_parser",
     "sphinx.ext.githubpages",
     "sphinx_copybutton",
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.mathjax',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.viewcode",
+    'sphinx.ext.extlinks',
 ]
+
+
+
+# Autodoc & Autosummary Configurations
+autodoc_member_order = "bysource"
+autodoc_default_options = {
+    "members": True,
+    "show-inheritance": True,
+}
+autosummary_generate = True
+
+# Hardware Mocking for CI/CD builds
+autodoc_mock_imports = [
+    "pynq",
+    "msgpack",
+    "anytree",
+    "xrfclk",
+    "xrfdc",
+    "cffi",
+    "Pyro4",
+    "psutil",
+    "networkx",
+    "numpy",
+]
+
+templates_path = ["_templates"]
 
 html_theme = "pydata_sphinx_theme"
 
