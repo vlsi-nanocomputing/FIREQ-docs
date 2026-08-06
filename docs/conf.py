@@ -56,7 +56,6 @@ autodoc_mock_imports = [
     "xrfclk",
     "xrfdc",
     "cffi",
-    "Pyro4",
     "psutil",
     "networkx",
     "numpy",
