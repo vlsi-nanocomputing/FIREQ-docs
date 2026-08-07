@@ -22,41 +22,28 @@ FIREQ currently supports two Xilinx RFSoC platforms: the **ZCU216** evaluation b
 	* The dedicated synthesizers **LMX2594 ADC** and **LMX2594 DAC** on the CLK104 board provide low-jitter RF sampling clocks for the RFSoC ADCs and DACs.
 	* The main RF output (Port A) of each synthesizer uses a **Carlisle SSMP loopback cable (TM40-0153)** to connect directly to the RF sampling clock input connectors on the ZCU216 EVM.
 
-### 2. RealDigital RFSoC4x2 Board
+### 2. RFSoC4x2 Board
 
 * **Overview & Documentation**: Refer to the official [RealDigital RFSoC4x2 Page](https://www.realdigital.org/hardware/rfsoc-4x2) and the [RFSoC-PYNQ Getting Started Guide](https://www.rfsoc-pynq.io/rfsoc_4x2_getting_started.html).
 * **Status**: **TBD**
 
 ---
-
 ## RF Data Converter Configuration & MTS Overview (ZCU216 Reference)
 
-The FIREQ firmware configures the onboard Zynq UltraScale+ RF Data Converter (RFDC) IP block for high-speed signal generation and acquisition on the **ZCU216** board, leveraging **Multi-Tile Synchronization (MTS)** ([PG269: Zynq UltraScale+ RF Data Converter LogiCORE IP Product Guide](https://docs.amd.com/r/en-US/pg269-rf-data-converter/Multi-Tile-Synchronization)) to maintain phase coherence across multiple converter tiles.
+The FIREQ firmware configures the onboard Zynq UltraScale+ RF Data Converter (RFDC) IP block on the **ZCU216** board for high-speed signal generation and acquisition. The setup leverages **Multi-Tile Synchronization (MTS)** following AMD/Xilinx guidelines ([PG269](https://docs.amd.com/r/en-US/pg269-rf-data-converter/Multi-Tile-Synchronization)) to maintain phase coherence across converter tiles.
 
-Below is the detailed clocking and sampling rate summary for the active tiles:
+### Key Highlights
+* **Active Channels**: DAC 228 (Ch 0 & 1), DAC 229 (Ch 0), ADC 224 (Ch 0), and ADC 225 (Ch 0).
+* **Sampling Frequencies**:
+  * **RF-DACs**: Operating at **9.33888 GSPS**.
+  * **RF-ADCs**: Operating at **2.33472 GSPS**.
+  * **Fabric Clock**: All AXI Stream interfaces and custom IP blocks operate at **583.68 MHz**.
+* **Clock Distribution**: Provided by the CLK104 daughterboard into master distribution nodes **ADC Tile 225** and **DAC Tile 229** (both with PLL VCO set at **9338.88 MHz**).
 
-### RF-ADC Tiles (Acquisition)
+> **Full Hardware Specifications & RFDC Tables**: For the complete tile tables, reference clock dividers, and physical XDC constraints (`PL_SYSREF` / `PL_CLK`), refer to the **[ZCU216 Overlay Documentation](repos/FIREQ/docs/modules/overlay_zcu216.md)**.
 
-| Tile | Sampling Rate ($F_s$) | Max $F_s$ | Reference Clock | PLL Ref Clock | Fabric Clock | Clock Source | Distribute Clock |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **ADC 224** | **2.33472 GSPS** | 2.500 GSPS | 2334.720 MHz | — | 583.680 MHz | Tile225 | Off |
-| **ADC 225** | **2.33472 GSPS** | 2.500 GSPS | 491.520 MHz | 245.76 MHz | 583.680 MHz | Tile225 | **PLL Output (Distributor)** |
-| **ADC 226** | **2.00000 GSPS** | 2.500 GSPS | 2000.000 MHz | — | 0.0 MHz | Tile226 | Off |
-| **ADC 227** | **2.00000 GSPS** | 2.500 GSPS | 2000.000 MHz | — | 0.0 MHz | Tile227 | Off |
-
-* **PLL Summary**: ADC 225 VCO is configured at **9338.88 MHz** ($M=4, R=2$, Fb Div $= 38$).
-
-### RF-DAC Tiles (Signal Generation)
-
-| Tile | Sampling Rate ($F_s$) | Max $F_s$ | Reference Clock | PLL Ref Clock | Fabric Clock | Clock Source | Distribute Clock |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **DAC 228** | **9.33888 GSPS** | 10.000 GSPS | 9338.880 MHz | — | 583.680 MHz | Tile229 | Off |
-| **DAC 229** | **9.33888 GSPS** | 10.000 GSPS | 491.520 MHz | 245.76 MHz | 583.680 MHz | Tile229 | **PLL Output (Distributor)** |
-| **DAC 230** | **9.33888 GSPS** | 10.000 GSPS | 9338.880 MHz | — | 0.0 MHz | Tile230 | Off |
-| **DAC 231** | **6.40000 GSPS** | 10.000 GSPS | 6400.000 MHz | — | 0.0 MHz | Tile231 | Off |
-
-* **PLL Summary**: DAC 229 VCO is configured at **9338.88 MHz** ($M=1, R=2$, Fb Div $= 38$).
----
+## RF Data Converter Configuration & MTS Overview (ZCU216 Reference)
+TO DO
 
 ## SD Card Image Flashing
 
@@ -85,12 +72,21 @@ Refer to [Server](repos/FIREQ-Server/docs/server.md)
 Once the server is running on the board, launch the client on your local workstation.
 
 1. **Launch the FIREQ Client**:
-Open a terminal in your local `FIREQ-Client` directory and run:
 
+The client depends on the packages listed in the repository requirements file:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Open a terminal in your local `FIREQ-Client` directory and run:
 
 ```bash
 python run_client.py
 ```
+
 2. **Execute an Experiment**:
 Pass a YAML experiment configuration file (e.g., a Rabi oscillation sequence):
 
