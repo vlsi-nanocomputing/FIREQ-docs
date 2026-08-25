@@ -1,0 +1,84 @@
+/* FIREQ documentation custom style */
+
+:root {
+  --fireq-qnano: #751434;
+  --fireq-qnano-hover: #9a1b45;
+  --fireq-text: #1f2937;
+  --fireq-border: #e5e7eb;
+
+  --pst-color-primary: #751434;
+  --pst-color-link: #007f92;
+  --pst-color-link-hover: #751434;
+}
+
+/* Navbar */
+
+.bd-header {
+  border-bottom: 1px solid var(--fireq-border);
+}
+
+.navbar-brand img {
+  max-height: 32px;
+  width: auto;
+}
+
+/* Typography */
+
+.bd-content h1 {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.bd-content h2 {
+  margin-top: 2.4rem;
+  font-weight: 750;
+  letter-spacing: -0.025em;
+}
+
+.bd-content p {
+  line-height: 1.6;
+}
+
+/* Architecture figure */
+
+.fireq-architecture {
+  margin-top: 1.2rem;
+  margin-bottom: 2.6rem;
+}
+
+.fireq-architecture img {
+  width: 100%;
+  max-width: 900px;
+}
+
+.fireq-architecture figcaption {
+  margin-top: 0.7rem;
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+/* Cards */
+
+.fireq-component-card,
+.fireq-doc-card {
+  height: 100%;
+  border: 1px solid var(--fireq-border);
+  border-top: 3px solid var(--fireq-qnano);
+  border-radius: 0.5rem;
+  box-shadow: 0 0.15rem 0.5rem rgba(17, 24, 39, 0.06);
+}
+
+.fireq-component-card:hover,
+.fireq-doc-card:hover {
+  border-top-color: var(--fireq-qnano-hover);
+  box-shadow: 0 0.25rem 0.8rem rgba(17, 24, 39, 0.10);
+}
+
+.sd-card {
+  --sd-color-card-border-hover: #751434;
+}
+
+.sd-card-title {
+  color: #111111;
+  font-weight: 700;
+}

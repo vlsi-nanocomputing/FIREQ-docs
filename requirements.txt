@@ -4,3 +4,4 @@ pydata-sphinx-theme
 sphinx-copybutton
 sphinx-autodoc-typehints
 pyyaml
+sphinx-design

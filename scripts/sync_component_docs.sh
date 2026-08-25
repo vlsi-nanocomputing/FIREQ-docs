@@ -32,7 +32,7 @@ sync_repo_docs() {
     --include='*.pdf' \
     --include='*.drawio' \
     --include='*.py' \
-    "${extra_includes[@]}" \
+    ${extra_includes[@]+"${extra_includes[@]}"} \
     --exclude='*' \
     "${src}/" "${dst}/"
 }

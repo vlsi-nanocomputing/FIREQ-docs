@@ -38,7 +38,8 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
-    'sphinx.ext.extlinks',
+    "sphinx.ext.extlinks",
+    "sphinx_design",
 ]
 
 
@@ -69,6 +70,14 @@ autodoc_mock_imports = [
 ]
 
 templates_path = ["_templates"]
+html_static_path = ["_static"]
+
+html_css_files = [
+    "fireq.css",
+]
+
+html_logo = "_static/fireq-logo.svg"
+html_favicon = "_static/favicon.ico"
 
 html_theme = "pydata_sphinx_theme"
 
