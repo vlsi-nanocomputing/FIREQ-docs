@@ -26,8 +26,8 @@ FIREQ currently supports two Xilinx RFSoC platforms: the **ZCU216** evaluation b
 
 * **Overview & Documentation**: Refer to the official [RealDigital RFSoC4x2 Page](https://www.realdigital.org/hardware/rfsoc-4x2) and the [RFSoC-PYNQ Getting Started Guide](https://www.rfsoc-pynq.io/rfsoc_4x2_getting_started.html).
 * **Active Channels**:
-	* **RF-DAC Channels**: DAC 
-	* **RF-ADC Channels**: ADC 
+	* **RF-DAC Channels**: DAC 228 (Channel 0) and DAC 230 (Channel 0)
+	* **RF-ADC Channels**: ADC 224 (Channel 0) and ADC 226 (Channel 0)
 ---
 
 ## RF Data Converter Configuration & MTS Overview (ZCU216 Reference)
@@ -44,9 +44,9 @@ The FIREQ firmware configures the onboard Zynq UltraScale+ RF Data Converter (RF
 
 > **Full Hardware Specifications & RFDC Tables**: For the complete tile tables, reference clock dividers, and physical XDC constraints (`PL_SYSREF` / `PL_CLK`), refer to the **[ZCU216 Overlay Documentation](repos/FIREQ/docs/modules/overlay_zcu216.md)**.
 
-> **Note:** The RF-DAC sampling frequency (**9.33888 GSPS**), RF-ADC sampling
-> frequency (**2.33472 GSPS**), and fabric clock (**583.68 MHz**) specified
-> above also apply to the **RFSoC4x2** platform.
+> **Note:** The RF-DAC sampling frequency (**9.33888 GSPS**) and fabric clock (**583.68 MHz**) specified
+> above also apply to the **RFSoC4x2** platform, with the RF-ADC sampling
+> frequency set to **4.66944 GSPS**.
 
 
 ## SD Card Image Flashing
@@ -72,10 +72,21 @@ To run FIREQ, your Micro-SD card (16 GB or larger) must be flashed with the appr
 ## Server Deployment & Execution
 
 The server runs on the Linux system of the RFSoC board. From your local
-workstation, copy the server repository to the board:
+workstation, clone the server repository and copy it to the board:
 
 ```bash
-scp -r /path/to/FIREQ-Server xilinx@<board-ip>:/home/xilinx/
+git clone https://github.com/vlsi-nanocomputing/FIREQ-Server.git
+scp -r FIREQ-Server xilinx@<board-ip>:/home/xilinx/
+```
+
+As an alternative, when the board has network access to GitHub, connect to the
+board and clone the repository directly there:
+
+```bash
+ssh xilinx@<board-ip>
+cd /home/xilinx
+git clone https://github.com/vlsi-nanocomputing/FIREQ-Server.git
+exit
 ```
 
 Copy the matching FPGA overlay files from the firmware repository to the board
@@ -117,6 +128,20 @@ Start the interactive server entry point:
 python API.py
 ```
 
+When prompted, set the address and port before starting the server. Bind the
+server to all board interfaces and choose a port reachable by the client (the
+defaults shown below are suitable for a direct board connection):
+
+```text
+# Insert server host (press Enter for "0.0.0.0")
+0.0.0.0
+# Insert server port (press Enter for "5000")
+5000
+```
+
+The client must use the board's reachable IP address, not `0.0.0.0`, and the
+same port selected here.
+
 When prompted for the overlay filename, enter the `.bit` filename relative to
 `/home/xilinx/` (for example, `FIREQ.bit`). The matching `.hwh` file must have
 the same base name and be in the same directory.
@@ -149,14 +174,21 @@ On Windows PowerShell, activate the environment with:
 .\.venv\Scripts\Activate.ps1
 ```
 
+Before launching the client, open `run_client.py` and set the server address
+and port to match the board configuration:
+
+```python
+SERVER_IP = "<board-ip>"
+SERVER_PORT = 5000
+```
+
 Start the client:
 
 ```bash
 python run_client.py
 ```
 
-The client uses the server address and port configured in the repository. Update
-those values before launching if the server is not at the default endpoint.
+The client uses the values configured above when it connects to the server.
 
 ### Example usage: ZCU216 loopback
 
