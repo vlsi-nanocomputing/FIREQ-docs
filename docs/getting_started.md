@@ -25,9 +25,11 @@ FIREQ currently supports two Xilinx RFSoC platforms: the **ZCU216** evaluation b
 ### 2. RFSoC4x2 Board
 
 * **Overview & Documentation**: Refer to the official [RealDigital RFSoC4x2 Page](https://www.realdigital.org/hardware/rfsoc-4x2) and the [RFSoC-PYNQ Getting Started Guide](https://www.rfsoc-pynq.io/rfsoc_4x2_getting_started.html).
-* **Status**: **TBD**
-
+* **Active Channels**:
+	* **RF-DAC Channels**: DAC 
+	* **RF-ADC Channels**: ADC 
 ---
+
 ## RF Data Converter Configuration & MTS Overview (ZCU216 Reference)
 
 The FIREQ firmware configures the onboard Zynq UltraScale+ RF Data Converter (RFDC) IP block on the **ZCU216** board for high-speed signal generation and acquisition. The setup leverages **Multi-Tile Synchronization (MTS)** following AMD/Xilinx guidelines ([PG269](https://docs.amd.com/r/en-US/pg269-rf-data-converter/Multi-Tile-Synchronization)) to maintain phase coherence across converter tiles.
@@ -42,15 +44,17 @@ The FIREQ firmware configures the onboard Zynq UltraScale+ RF Data Converter (RF
 
 > **Full Hardware Specifications & RFDC Tables**: For the complete tile tables, reference clock dividers, and physical XDC constraints (`PL_SYSREF` / `PL_CLK`), refer to the **[ZCU216 Overlay Documentation](repos/FIREQ/docs/modules/overlay_zcu216.md)**.
 
-## RF Data Converter Configuration & MTS Overview (ZCU216 Reference)
-TO DO
+> **Note:** The RF-DAC sampling frequency (**9.33888 GSPS**), RF-ADC sampling
+> frequency (**2.33472 GSPS**), and fabric clock (**583.68 MHz**) specified
+> above also apply to the **RFSoC4x2** platform.
+
 
 ## SD Card Image Flashing
 
 To run FIREQ, your Micro-SD card (16 GB or larger) must be flashed with the appropriate PYNQ Linux image.
 
 1. **Download the Linux Image**:
-	 * **For RFSoC4x2**: Download the official PYNQ v??? image from [PYNQ Boards](http://www.pynq.io/boards.html).
+	 * **For RFSoC4x2**: Download the official PYNQ v3.0.1 image from [PYNQ Boards](http://www.pynq.io/boards.html).
 	 * **For ZCU216**: Use our custom pre-configured FIREQ ZCU216 [image](https://drive.google.com/file/d/1SGH7_pw0L9ww165A97FIzp7Xo3PNwCV2/view?usp=sharing)
 
 2. **Flash the Micro-SD Card**:
@@ -66,14 +70,72 @@ To run FIREQ, your Micro-SD card (16 GB or larger) must be flashed with the appr
 ---
 
 ## Server Deployment & Execution
-Refer to [Server](repos/FIREQ-Server/docs/server.md)
+
+The server runs on the Linux system of the RFSoC board. From your local
+workstation, copy the server repository to the board:
+
+```bash
+scp -r /path/to/FIREQ-Server xilinx@<board-ip>:/home/xilinx/
+```
+
+Copy the matching FPGA overlay files from the firmware repository to the board
+root directory. The prepackaged overlays are located in:
+
+* `FIREQ/zcu216_overlay/` for the ZCU216
+* `FIREQ/rfsoc4x2_overlay/` for the RFSoC4x2
+
+Each directory contains the matching `.bit` and `.hwh` files. For example:
+
+```bash
+scp /path/to/FIREQ/zcu216_overlay/FIREQ.bit xilinx@<board-ip>:/home/xilinx/
+scp /path/to/FIREQ/zcu216_overlay/FIREQ.hwh xilinx@<board-ip>:/home/xilinx/
+```
+
+Use the corresponding files from `rfsoc4x2_overlay/` when deploying to the
+RFSoC4x2. Keep the `.bit` and `.hwh` files together under `/home/xilinx/`.
+
+### Board-side startup
+
+Connect to the board and activate the PYNQ environment:
+
+```bash
+ssh xilinx@<board-ip>
+sudo -i
+source /etc/profile.d/pynq_venv.sh
+cd /home/xilinx/FIREQ-Server
+```
+
+Install or update server dependencies when necessary:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start the interactive server entry point:
+
+```bash
+python API.py
+```
+
+When prompted for the overlay filename, enter the `.bit` filename relative to
+`/home/xilinx/` (for example, `FIREQ.bit`). The matching `.hwh` file must have
+the same base name and be in the same directory.
 
 ## Client Execution & Workflow
 Once the server is running on the board, launch the client on your local workstation.
 
-1. **Launch the FIREQ Client**:
+### Local client setup
 
-The client depends on the packages listed in the repository requirements file:
+Copy or clone the client repository on the local workstation and open a
+terminal in that directory:
+
+```bash
+git clone https://github.com/vlsi-nanocomputing/FIREQ-Client.git
+cd FIREQ-Client
+```
+
+Create the virtual environment and install the dependencies listed in
+`requirements.txt`:
 
 ```bash
 python -m venv .venv
@@ -81,21 +143,88 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Open a terminal in your local `FIREQ-Client` directory and run:
+On Windows PowerShell, activate the environment with:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+Start the client:
 
 ```bash
 python run_client.py
 ```
 
-2. **Execute an Experiment**:
-Pass a YAML experiment configuration file (e.g., a Rabi oscillation sequence):
+The client uses the server address and port configured in the repository. Update
+those values before launching if the server is not at the default endpoint.
 
+### Example usage: ZCU216 loopback
+
+For the ZCU216 example, connect **DAC 228 channel 0** to **ADC 224 channel 0**
+using the board's RF breakout/daughter-board setup. The first experiment uses
+the loopback configuration:
+
+At the client prompt, run:
+
+```text
+run_yaml experiments/loopback.yaml
+```
+
+The client stores the experiment output in
+`experiment_output/<experiment_name>/experiment_<timestamp>/`. After the
+experiment completes, open a second terminal in the `FIREQ-Client` directory,
+activate the virtual environment, and start the plotter:
 
 ```bash
-run_yaml experiments/Rabi.yaml
+python plotter.py
 ```
-3. **Inspect Output**:
-The client communicates with the server via the binary TCP protocol, applies the parameters, triggers execution, receives raw DMA acquisition streams, and generates plots and data files in your output directory.
+
+At the plotter prompt, use the output directory to display and save the 2D plot:
+
+```text
+plot_2d experiment_output/<experiment_name>/experiment_<timestamp> save
+```
+
+```{figure} ../graphics/zcu216_loopback.png
+:alt: ZCU216 loopback connection using the daughter board
+:align: center
+
+ZCU216 loopback setup using the daughter board.
+```
+
+### Example usage: RFSoC4x2 loopback
+
+For the RFSoC4x2 example, connect **DAC  channel ** to **ADC  channel **.
+Use the same workflow:
+
+At the client prompt, run:
+
+```text
+run_yaml experiments/loopback.yaml
+```
+
+The output is stored in
+`experiment_output/<experiment_name>/experiment_<timestamp>/`. After the
+experiment completes, start the plotter from a second terminal in the
+`FIREQ-Client` directory:
+
+```bash
+python plotter.py
+```
+
+Then use the plotter prompt:
+
+```text
+plot_2d experiment_output/<experiment_name>/experiment_<timestamp> save
+```
+
+```{figure} ../graphics/rfsoc4x2_loopback.png
+:alt: RFSoC4x2 loopback connection
+:align: center
+
+RFSoC4x2 loopback setup.
+```
+
 
 ## Where to Go Next?
 Depending on your task, refer to the following documentation sections:
