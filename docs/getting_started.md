@@ -208,7 +208,7 @@ experiment completes, open a second terminal in the `FIREQ-Client` directory,
 activate the virtual environment, and start the plotter:
 
 ```bash
-python plotter.py
+python run_plotter.py
 ```
 
 At the plotter prompt, use the output directory to display and save the 2D plot:
@@ -226,7 +226,7 @@ ZCU216 loopback setup using the daughter board.
 
 ### Example usage: RFSoC4x2 loopback
 
-For the RFSoC4x2 example, connect **DAC  channel ** to **ADC  channel **.
+For the RFSoC4x2 example, connect **DAC 228 channel 0** to **ADC 224 channel 0**.
 Use the same workflow:
 
 At the client prompt, run:
@@ -241,7 +241,7 @@ experiment completes, start the plotter from a second terminal in the
 `FIREQ-Client` directory:
 
 ```bash
-python plotter.py
+python run_plotter.py
 ```
 
 Then use the plotter prompt:
