@@ -82,3 +82,53 @@
   color: #111111;
   font-weight: 700;
 }
+
+/* Project information page */
+
+.fireq-institution-card {
+  height: 100%;
+  min-height: 245px;
+  text-align: center;
+  border: 1px solid var(--fireq-border);
+  border-top: 3px solid var(--fireq-qnano);
+  border-radius: 0.5rem;
+  box-shadow: 0 0.15rem 0.5rem rgba(17, 24, 39, 0.06);
+}
+
+.fireq-institution-card .sd-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.fireq-institution-card .sd-card-title {
+  min-height: 3.2rem;
+  margin-bottom: 1.2rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fireq-institution-logo {
+  display: block;
+  width: auto;
+  max-width: 220px;
+  height: 90px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.fireq-institution-logo-small {
+  height: 105px;
+  max-width: 150px;
+}
+
+.fireq-institution-logo-wide {
+  height: 92px;
+  max-width: 240px;
+}
