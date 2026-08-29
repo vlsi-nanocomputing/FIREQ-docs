@@ -1,4 +1,6 @@
 # FIREQ Documentation
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22161850.svg)](https://doi.org/10.5281/zenodo.22161850)
+[![GitHub Release](https://img.shields.io/github/v/release/vlsi-nanocomputing/FIREQ-docs)](https://github.com/vlsi-nanocomputing/FIREQ-docs/releases/latest)
 
 This repository contains the central documentation site for **FIREQ**.
 
