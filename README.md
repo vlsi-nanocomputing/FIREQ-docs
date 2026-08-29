@@ -18,7 +18,7 @@ content from the FIREQ component repositories:
 
 - [`FIREQ-Client`](https://github.com/vlsi-nanocomputing/FIREQ-Client): Python client interface.
 - [`FIREQ-Server`](https://github.com/vlsi-nanocomputing/FIREQ-Server): server-side runtime and hardware control layer.
-<!---- [`FIREQ`](https://github.com/vlsi-nanocomputing/FIREQ): FPGA firmware and RFSoC hardware logic.-->
+- [`FIREQ`](https://github.com/vlsi-nanocomputing/FIREQ): FPGA firmware and RFSoC hardware logic.
 
 The central documentation source is located in:
 
