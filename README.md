@@ -128,7 +128,7 @@ repository dispatches are used to build preview artifacts.
 
 Documentation improvements should be made either:
 
-- directly in this repository for project-level pages by creating a docs/** branch
+- directly in this repository for project-level pages by creating a `docs/**` branch
 - in the relevant component repository for client, server, or firmware-specific
   documentation.
 
