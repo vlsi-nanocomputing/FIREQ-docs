@@ -60,8 +60,7 @@ The FIREQ platform is organized into multiple repositories:
 ## Contact & support
 
 For questions, bug reports, feature requests, or documentation improvements,
-please use the [GitHub Issue Tracker](https://github.com/vlsi-nanocomputing/) of the relevant repository.
-
+please use the GitHub issue tracker of the relevant repository: [FIREQ-docs](https://github.com/vlsi-nanocomputing/FIREQ-docs/issues), [FIREQ-Client](https://github.com/vlsi-nanocomputing/FIREQ-Client/issues), [FIREQ-Server](https://github.com/vlsi-nanocomputing/FIREQ-Server/issues), or [FIREQ](https://github.com/vlsi-nanocomputing/FIREQ/issues).
 General project information and institutional contacts are available through:
 
 - [QNANO Research Group](https://qnano.polito.it/)

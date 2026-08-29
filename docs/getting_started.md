@@ -89,21 +89,12 @@ git clone https://github.com/vlsi-nanocomputing/FIREQ-Server.git
 exit
 ```
 
-Copy the matching FPGA overlay files from the firmware repository to the board
-root directory. The prepackaged overlays are located in:
+The prepackaged overlays are located in:
 
-* `FIREQ/zcu216_overlay/` for the ZCU216
-* `FIREQ/rfsoc4x2_overlay/` for the RFSoC4x2
+* `FIREQ-Server/overlays/zcu216` for the ZCU216
+* `FIREQ-Server/rfsoc4x2_overlay/rfsoc4x2` for the RFSoC4x2
 
-Each directory contains the matching `.bit` and `.hwh` files. For example:
-
-```bash
-scp /path/to/FIREQ/zcu216_overlay/FIREQ.bit xilinx@<board-ip>:/home/xilinx/
-scp /path/to/FIREQ/zcu216_overlay/FIREQ.hwh xilinx@<board-ip>:/home/xilinx/
-```
-
-Use the corresponding files from `rfsoc4x2_overlay/` when deploying to the
-RFSoC4x2. Keep the `.bit` and `.hwh` files together under `/home/xilinx/`.
+Each directory contains the matching `.bit` and `.hwh` files. 
 
 ### Board-side startup
 
@@ -125,7 +116,7 @@ pip install -r requirements.txt
 Start the interactive server entry point:
 
 ```bash
-python API.py
+python start_server.py
 ```
 
 When prompted, set the address and port before starting the server. Bind the
