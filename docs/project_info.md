@@ -55,7 +55,7 @@ The FIREQ platform is organized into multiple repositories:
 - [**FIREQ-docs**](https://github.com/vlsi-nanocomputing/FIREQ-docs): central documentation site.
 - [**FIREQ-Client**](https://github.com/vlsi-nanocomputing/FIREQ-Client): Python client interface.
 - [**FIREQ-Server**](https://github.com/vlsi-nanocomputing/FIREQ-Server): server-side runtime and hardware control layer.
-<!--- [**FIREQ**](https://github.com/vlsi-nanocomputing/FIREQ): FPGA firmware and RFSoC hardware logic.-->
+- [**FIREQ**](https://github.com/vlsi-nanocomputing/FIREQ): FPGA firmware and RFSoC hardware logic.
 
 ## Contact & support
 
