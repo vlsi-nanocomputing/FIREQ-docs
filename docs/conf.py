@@ -28,6 +28,10 @@ if release_file.exists():
 else:
     release = "dev"
 
+html_title = "FIREQ Documentation"
+html_short_title = "FIREQ"
+html_baseurl = "https://fireq-docs.polito.it/"
+
 extensions = [
     "myst_parser",
     "sphinx.ext.githubpages",

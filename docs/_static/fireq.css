@@ -60,27 +60,58 @@
 /* Cards */
 
 .fireq-component-card,
-.fireq-doc-card {
+.fireq-doc-card,
+.fireq-institution-card {
   height: 100%;
-  border: 1px solid var(--fireq-border);
+  border: 1px solid var(--pst-color-border);
   border-top: 3px solid var(--fireq-qnano);
   border-radius: 0.5rem;
   box-shadow: 0 0.15rem 0.5rem rgba(17, 24, 39, 0.06);
 }
 
 .fireq-component-card:hover,
-.fireq-doc-card:hover {
+.fireq-doc-card:hover,
+.fireq-institution-card:hover {
   border-top-color: var(--fireq-qnano-hover);
   box-shadow: 0 0.25rem 0.8rem rgba(17, 24, 39, 0.10);
 }
 
 .sd-card {
   --sd-color-card-border-hover: #751434;
+  background-color: var(--pst-color-surface);
 }
 
 .sd-card-title {
-  color: #111111;
+  color: var(--pst-color-text-base);
   font-weight: 700;
+}
+
+.sd-card-text,
+.sd-card-body p {
+  color: var(--pst-color-text-base);
+}
+
+/* Dark mode fixes */
+
+html[data-theme="dark"] .fireq-component-card,
+html[data-theme="dark"] .fireq-doc-card,
+html[data-theme="dark"] .fireq-institution-card {
+  border-color: var(--pst-color-border);
+  border-top-color: var(--pst-color-border);
+  box-shadow: none;
+}
+
+html[data-theme="dark"] .sd-card {
+  background-color: var(--pst-color-surface);
+}
+
+html[data-theme="dark"] .sd-card-title {
+  color: var(--pst-color-text-base);
+}
+
+html[data-theme="dark"] .sd-card-text,
+html[data-theme="dark"] .sd-card-body p {
+  color: var(--pst-color-text-base);
 }
 
 /* Project information page */
