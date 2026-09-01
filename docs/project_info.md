@@ -8,8 +8,8 @@ control, and FPGA firmware for signal generation and acquisition.
 
 For a complete architectural overview and capabilities of FIREQ, please read our paper:
 
-> **[Insert Paper Title Here]** *(Authors et al., 2026)*  
-> [Link to Paper/DOI](#)
+> **FIREQ: FPGA Instrumentation for Readout and Qubit control** *La Capra et al., 2026*  
+> [Link to Paper/DOI](https://doi.org/10.48550/arXiv.2608.29399)
 
 ## Contributing institutions
 
