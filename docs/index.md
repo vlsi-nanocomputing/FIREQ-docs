@@ -1,6 +1,17 @@
 # Welcome to FIREQ
 
-FIREQ stands for *FPGA Instrumentation for Readout and Qubit control*. It is a flexible platform for quantum-control experiments built around RFSoC hardware.
+**FIREQ** stands for *FPGA Instrumentation for Readout and Qubit control*. It is
+an RFSoC-based platform for quantum-control experiments designed to be usable
+also by researchers without specific FPGA or hardware-design expertise.
+
+For supported boards, FIREQ provides a ready-to-use FPGA bitstream together with
+the corresponding server software and Python client, allowing users to start
+running experiments without rebuilding or modifying the underlying hardware
+design.
+
+At the same time, FIREQ remains fully open and extensible: advanced users can
+modify the HDL firmware, integrate custom IP blocks, and adapt the platform to
+new control and readout architectures.
 
 FIREQ combines a high-level Python client, a runtime server, and custom HDL
 firmware into a unified workflow for signal generation, data acquisition, and
