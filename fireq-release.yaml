@@ -1,9 +1,9 @@
-fireq_release: "0.1.0"
+fireq_release: "0.1.1"
 
 repositories:
   client:
     repository: "vlsi-nanocomputing/FIREQ-Client"
-    ref: "version-0.1.0"
+    ref: "v0.1.1"
 
   firmware:
     repository: "vlsi-nanocomputing/FIREQ"
@@ -11,4 +11,4 @@ repositories:
 
   server:
     repository: "vlsi-nanocomputing/FIREQ-Server"
-    ref: "version-0.1.0"
+    ref: "v0.1.1-docs"
