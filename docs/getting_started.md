@@ -55,7 +55,7 @@ To run FIREQ, your Micro-SD card (16 GB or larger) must be flashed with the appr
 
 1. **Download the Linux Image**:
 	 * **For RFSoC4x2**: Download the official PYNQ v3.0.1 image from [PYNQ Boards](http://www.pynq.io/boards.html).
-	 * **For ZCU216**: Use our custom pre-configured FIREQ ZCU216 [image](https://drive.google.com/file/d/1SGH7_pw0L9ww165A97FIzp7Xo3PNwCV2/view?usp=sharing)
+	 * **For ZCU216**: Use our custom pre-configured FIREQ ZCU216 [image](https://drive.google.com/file/d/1fQA9_VHqMsSg6x3Nt-n7CbyrA6XUC126/view)
 
 2. **Flash the Micro-SD Card**:
 	 * Insert the Micro-SD card into your host workstation.
