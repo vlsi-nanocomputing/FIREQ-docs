@@ -42,7 +42,7 @@ The FIREQ firmware configures the onboard Zynq UltraScale+ RF Data Converter (RF
   * **Fabric Clock**: All AXI Stream interfaces and custom IP blocks operate at **583.68 MHz**.
 * **Clock Distribution**: Provided by the CLK104 daughterboard into master distribution nodes **ADC Tile 225** and **DAC Tile 229** (both with PLL VCO set at **9338.88 MHz**).
 
-> **Full Hardware Specifications & RFDC Tables**: For the complete tile tables, reference clock dividers, and physical XDC constraints (`PL_SYSREF` / `PL_CLK`), refer to the **[ZCU216 Overlay Documentation](repos/FIREQ/docs/modules/overlay_zcu216.md)**.
+> **Full Hardware Specifications & RFDC Tables**: For the complete tile tables, reference clock dividers, physical XDC constraints (`PL_SYSREF` / `PL_CLK`), and the drive/readout DAC mapping, refer to the **[ZCU216 Overlay README](repos/FIREQ/zcu216_overlay/readme.md)** or the **[RFSoC4x2 Overlay README](repos/FIREQ/rfsoc4x2_overlay/readme.md)**.
 
 > **Note:** The RF-DAC sampling frequency (**9.33888 GSPS**) and fabric clock (**583.68 MHz**) specified
 > above also apply to the **RFSoC4x2** platform, with the RF-ADC sampling
@@ -183,29 +183,48 @@ The client uses the values configured above when it connects to the server.
 
 ### Example usage: ZCU216 loopback
 
-For the ZCU216 example, connect **DAC 228 channel 0** to **ADC 224 channel 0**
-using the board's RF breakout/daughter-board setup. The first experiment uses
-the loopback configuration:
+For the ZCU216 `drive_loopback` example, use the following RF connections:
+
+* the **drive output** is **DAC 228, channel 0**;
+* the **readout output** is **DAC 229, channel 0**;
+* the acquisition input is **ADC 224, channel 0**.
+
+The `drive_loopback.yaml` example emits a drive pulse only: it sets
+`_readout: false`, uses drive trigger channel 1, and leaves the readout trigger
+channel disabled. Consequently, this specific loopback experiment uses **DAC
+228 channel 0** and **ADC 224 channel 0**; the readout DAC is reserved for
+experiments that define a readout pulse (`_readout: true`). Connect DAC 228
+channel 0 to ADC 224 channel 0 using the board's RF breakout/daughter-board
+setup.
 
 At the client prompt, run:
 
 ```text
-run_yaml experiments/loopback.yaml
+run_yaml yaml_experiment_configurations_examples/drive_loopback.yaml
 ```
 
 The client stores the experiment output in
 `experiment_output/<experiment_name>/experiment_<timestamp>/`. After the
-experiment completes, open a second terminal in the `FIREQ-Client` directory,
-activate the virtual environment, and start the plotter:
+experiment completes, export the per-point data from the client prompt:
+
+```text
+export experiment_output/<experiment_name>/experiment_<timestamp>/ exported/<experiment_name>/
+```
+
+Then open a second terminal in the `FIREQ-Client` directory, activate the
+virtual environment, and start the plotter:
 
 ```bash
 python run_plotter.py
 ```
 
-At the plotter prompt, use the output directory to display and save the 2D plot:
+At the plotter prompt, use the exported directory to plot the acquired signal
+versus the decimated sample time. `plot_2d` is the one-dimensional line plot
+for this experiment: the client averages the shots and uses `time` as the
+x-axis.
 
 ```text
-plot_2d experiment_output/<experiment_name>/experiment_<timestamp> save
+plot_2d exported/<experiment_name>/
 ```
 
 ```{figure} ../graphics/zcu216_loopback.png
@@ -217,28 +236,41 @@ ZCU216 loopback setup using the daughter board.
 
 ### Example usage: RFSoC4x2 loopback
 
-For the RFSoC4x2 example, connect **DAC 228 channel 0** to **ADC 224 channel 0**.
-Use the same workflow:
+For the RFSoC4x2 `drive_loopback` example, use the following RF connections:
+
+* the **drive output** is **DAC 228, channel 0**;
+* the **readout output** is **DAC 230, channel 0**;
+* the acquisition input is **ADC 224, channel 0**.
+
+As on the ZCU216, `drive_loopback.yaml` emits only the drive pulse. Therefore,
+for this first experiment connect DAC 228 channel 0 directly to ADC 224 channel
+0. DAC 230 channel 0 is the readout output used by experiments that define a
+readout pulse; it is not used by this drive-only loopback.
 
 At the client prompt, run:
 
 ```text
-run_yaml experiments/loopback.yaml
+run_yaml yaml_experiment_configurations_examples/drive_loopback.yaml
 ```
 
 The output is stored in
 `experiment_output/<experiment_name>/experiment_<timestamp>/`. After the
-experiment completes, start the plotter from a second terminal in the
-`FIREQ-Client` directory:
+experiment completes, export the data from the client prompt:
+
+```text
+export experiment_output/<experiment_name>/experiment_<timestamp>/ exported/<experiment_name>/
+```
+
+Then start the plotter from a second terminal in the `FIREQ-Client` directory:
 
 ```bash
 python run_plotter.py
 ```
 
-Then use the plotter prompt:
+Then use the plotter prompt to plot the acquired signal versus sample time:
 
 ```text
-plot_2d experiment_output/<experiment_name>/experiment_<timestamp> save
+plot_2d exported/<experiment_name>/
 ```
 
 ```{figure} ../graphics/rfsoc4x2_loopback.png
@@ -256,5 +288,3 @@ Depending on your task, refer to the following documentation sections:
 - **[FIREQ-Server Documentation](repos/FIREQ-Server/docs/index.md)**: Network communication protocol, server API.
 - **[FIREQ-Client Documentation](repos/FIREQ-Client/docs/index.md)**: Guide on writing custom YAML experiment definitions, using the Python API, CLI tools, and automated plotting options.
 - **[FPGA Firmware & Modules](repos/FIREQ/docs/index.md)**: Deep dive into the Vivado overlay architecture, IP block definitions (Generators, Timing, Acquisition units), and Register Maps.
-
-
