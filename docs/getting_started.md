@@ -197,6 +197,13 @@ experiments that define a readout pulse (`_readout: true`). Connect DAC 228
 channel 0 to ADC 224 channel 0 using the board's RF breakout/daughter-board
 setup.
 
+```{figure} ../graphics/zcu216_loopback.png
+:alt: XM655 HC2 headers with the DAC 228 channel 0 pins on JHC1 and the ADC 224 channel 0 pins on JHC5 highlighted
+:align: center
+
+ZCU216 loopback on the XM655: DAC 228 channel 0 (JHC1) to ADC 224 channel 0 (JHC5).
+```
+
 At the client prompt, run:
 
 ```text
@@ -227,13 +234,6 @@ x-axis.
 plot_2d exported/<experiment_name>/
 ```
 
-```{figure} ../graphics/zcu216_loopback.png
-:alt: ZCU216 loopback connection using the daughter board
-:align: center
-
-ZCU216 loopback setup using the daughter board.
-```
-
 ### Example usage: RFSoC4x2 loopback
 
 For the RFSoC4x2 `drive_loopback` example, use the following RF connections:
@@ -246,6 +246,13 @@ As on the ZCU216, `drive_loopback.yaml` emits only the drive pulse. Therefore,
 for this first experiment connect DAC 228 channel 0 directly to ADC 224 channel
 0. DAC 230 channel 0 is the readout output used by experiments that define a
 readout pulse; it is not used by this drive-only loopback.
+
+```{figure} ../graphics/rfsoc4x2_loopback.png
+:alt: RFSoC4x2 front panel with an SMA cable from DAC_B to ADC_D
+:align: center
+
+RFSoC4x2 loopback: DAC_B (DAC 228 channel 0) to ADC_D (ADC 224 channel 0).
+```
 
 At the client prompt, run:
 
@@ -271,13 +278,6 @@ Then use the plotter prompt to plot the acquired signal versus sample time:
 
 ```text
 plot_2d exported/<experiment_name>/
-```
-
-```{figure} ../graphics/rfsoc4x2_loopback.png
-:alt: RFSoC4x2 loopback connection
-:align: center
-
-RFSoC4x2 loopback setup.
 ```
 
 
