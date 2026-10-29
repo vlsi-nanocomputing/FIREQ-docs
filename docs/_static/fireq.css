@@ -1,17 +1,51 @@
 /* FIREQ documentation custom style */
 
-:root {
-  --fireq-qnano: #751434;
-  --fireq-qnano-hover: #9a1b45;
-  --fireq-text: #1f2937;
-  --fireq-border: #e5e7eb;
 
-  --pst-color-primary: #751434;
-  --pst-color-link: #007f92;
-  --pst-color-link-hover: #751434;
+/* =========================================================
+   FIREQ palette
+   ========================================================= */
+
+:root {
+  --fireq-dark: #79002d;
+  --fireq-main: #98003f;
+  --fireq-accent: #b52358;
+  --fireq-soft: #f7e7ed;
+  --fireq-arrow: #66758a;
+  --fireq-border: #d1d5db;
 }
 
-/* Navbar */
+
+/* Explicit light-mode palette */
+
+html[data-theme="light"] {
+  --pst-color-primary: #98003f;
+  --pst-color-secondary: #98003f;
+  --pst-color-accent: #b52358;
+  --pst-color-link: #98003f;
+  --pst-color-link-hover: #79002d;
+
+  --pst-color-target: rgba(181, 35, 88, 0.10);
+}
+
+
+/* Dark-mode palette */
+
+html[data-theme="dark"] {
+  --pst-color-primary: #d46b91;
+  --pst-color-secondary: #d46b91;
+  --pst-color-accent: #d46b91;
+  --pst-color-link: #d46b91;
+  --pst-color-link-hover: #ef9fba;
+
+  --pst-color-target: rgba(212, 107, 145, 0.14);
+
+  --fireq-border: #4b5563;
+}
+
+
+/* =========================================================
+   Navbar
+   ========================================================= */
 
 .bd-header {
   border-bottom: 1px solid var(--fireq-border);
@@ -22,7 +56,10 @@
   width: auto;
 }
 
-/* Typography */
+
+/* =========================================================
+   Typography
+   ========================================================= */
 
 .bd-content h1 {
   font-weight: 800;
@@ -39,7 +76,19 @@
   line-height: 1.6;
 }
 
-/* Architecture figure */
+
+/* =========================================================
+   Links
+   ========================================================= */
+
+a {
+  text-underline-offset: 0.15em;
+}
+
+
+/* =========================================================
+   Architecture figure
+   ========================================================= */
 
 .fireq-architecture {
   margin-top: 1.2rem;
@@ -57,29 +106,58 @@
   font-size: 0.95rem;
 }
 
-/* Cards */
+html[data-theme="dark"] .fireq-architecture figcaption {
+  color: #aeb7c4;
+}
+
+
+/* =========================================================
+   Cards
+   ========================================================= */
 
 .fireq-component-card,
 .fireq-doc-card,
 .fireq-institution-card {
   height: 100%;
+
   border: 1px solid var(--pst-color-border);
-  border-top: 3px solid var(--fireq-qnano);
   border-radius: 0.5rem;
-  box-shadow: 0 0.15rem 0.5rem rgba(17, 24, 39, 0.06);
+
+  box-shadow:
+    0 0.15rem 0.5rem rgba(17, 24, 39, 0.06);
+
+  transition:
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
+
+/* Card background */
+
+.sd-card {
+  background-color: var(--pst-color-surface);
+}
+
+
+/* Override sphinx-design hover behavior */
+
+.bd-content .sd-card.sd-card-hover:hover,
+.sd-card-hover:hover,
+.sd-card-hover:focus,
 .fireq-component-card:hover,
 .fireq-doc-card:hover,
 .fireq-institution-card:hover {
-  border-top-color: var(--fireq-qnano-hover);
-  box-shadow: 0 0.25rem 0.8rem rgba(17, 24, 39, 0.10);
+  border-color: var(--fireq-accent) !important;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 0.25rem 0.8rem rgba(17, 24, 39, 0.10);
 }
 
-.sd-card {
-  --sd-color-card-border-hover: #751434;
-  background-color: var(--pst-color-surface);
-}
+
+/* Card text */
 
 .sd-card-title {
   color: var(--pst-color-text-base);
@@ -91,39 +169,89 @@
   color: var(--pst-color-text-base);
 }
 
-/* Dark mode fixes */
+
+/* Dark-mode cards */
 
 html[data-theme="dark"] .fireq-component-card,
 html[data-theme="dark"] .fireq-doc-card,
 html[data-theme="dark"] .fireq-institution-card {
   border-color: var(--pst-color-border);
-  border-top-color: var(--pst-color-border);
   box-shadow: none;
 }
 
-html[data-theme="dark"] .sd-card {
-  background-color: var(--pst-color-surface);
+html[data-theme="dark"] .bd-content .sd-card.sd-card-hover:hover,
+html[data-theme="dark"] .sd-card-hover:hover,
+html[data-theme="dark"] .sd-card-hover:focus,
+html[data-theme="dark"] .fireq-component-card:hover,
+html[data-theme="dark"] .fireq-doc-card:hover,
+html[data-theme="dark"] .fireq-institution-card:hover {
+  border-color: #d46b91 !important;
+
+  transform: translateY(-1px);
+
+  box-shadow: none;
 }
 
-html[data-theme="dark"] .sd-card-title {
+
+/* =========================================================
+   Left sidebar
+   ========================================================= */
+
+.bd-sidebar-primary a,
+.bd-sidebar-primary .nav-link {
   color: var(--pst-color-text-base);
 }
 
-html[data-theme="dark"] .sd-card-text,
-html[data-theme="dark"] .sd-card-body p {
+.bd-sidebar-primary a:hover,
+.bd-sidebar-primary a:focus,
+.bd-sidebar-primary .nav-link:hover,
+.bd-sidebar-primary .nav-link:focus,
+.bd-sidebar-primary .nav-link.active,
+.bd-sidebar-primary .current > a,
+.bd-sidebar-primary .active > a {
+  color: var(--pst-color-primary) !important;
+}
+
+
+/* =========================================================
+   Right "On this page" sidebar
+   ========================================================= */
+
+.bd-sidebar-secondary .nav-link,
+.bd-toc .nav-link,
+.bd-toc a {
   color: var(--pst-color-text-base);
 }
 
-/* Project information page */
+.bd-sidebar-secondary .nav-link:hover,
+.bd-sidebar-secondary .nav-link:focus,
+.bd-sidebar-secondary .nav-link.active,
+.bd-sidebar-secondary .toc-entry.current > .nav-link,
+.bd-toc .nav-link:hover,
+.bd-toc .nav-link:focus,
+.bd-toc .nav-link.active,
+.bd-toc a:hover,
+.bd-toc a:focus,
+.bd-toc a.active {
+  color: var(--pst-color-primary) !important;
+}
+
+
+/* Active TOC indicator */
+
+.bd-sidebar-secondary .toc-entry.current > .nav-link,
+.bd-sidebar-secondary .nav-link.active {
+  border-left-color: var(--pst-color-primary) !important;
+}
+
+
+/* =========================================================
+   Project information page
+   ========================================================= */
 
 .fireq-institution-card {
-  height: 100%;
   min-height: 245px;
   text-align: center;
-  border: 1px solid var(--fireq-border);
-  border-top: 3px solid var(--fireq-qnano);
-  border-radius: 0.5rem;
-  box-shadow: 0 0.15rem 0.5rem rgba(17, 24, 39, 0.06);
 }
 
 .fireq-institution-card .sd-card-body {
@@ -134,22 +262,32 @@ html[data-theme="dark"] .sd-card-body p {
 }
 
 .fireq-institution-card .sd-card-title {
-  min-height: 3.2rem;
-  margin-bottom: 1.2rem;
-  font-size: 0.98rem;
-  font-weight: 700;
-  line-height: 1.25;
-  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  min-height: 3.2rem;
+  margin-bottom: 1.2rem;
+
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.25;
+
+  text-align: center;
 }
+
+
+/* =========================================================
+   Institution logos
+   ========================================================= */
 
 .fireq-institution-logo {
   display: block;
+
   width: auto;
   max-width: 220px;
   height: 90px;
+
   object-fit: contain;
   margin: 0 auto;
 }
@@ -162,4 +300,15 @@ html[data-theme="dark"] .sd-card-body p {
 .fireq-institution-logo-wide {
   height: 92px;
   max-width: 240px;
+}
+
+/* =========================================================
+   Section target highlight
+   ========================================================= */
+
+.bd-main .bd-content .bd-article-container .bd-article
+:target > :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5) {
+  background-color: transparent !important;
+  border-left: 4px solid var(--pst-color-primary);
+  padding-left: 0.5rem;
 }

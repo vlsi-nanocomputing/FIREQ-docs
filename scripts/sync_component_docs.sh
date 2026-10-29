@@ -3,19 +3,55 @@ set -euo pipefail
 
 echo "Synchronizing FIREQ component documentation..."
 
-rm -rf docs/repos
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+MANIFEST="${ROOT_DIR}/fireq-release.yaml"
+CACHE_DIR="${ROOT_DIR}/.cache/component-docs"
+DOCS_DIR="${ROOT_DIR}/docs/repos"
 
-mkdir -p docs/repos/FIREQ-Client
-mkdir -p docs/repos/FIREQ
-mkdir -p docs/repos/FIREQ-Server
+rm -rf "${DOCS_DIR}"
+mkdir -p "${DOCS_DIR}"
+mkdir -p "${CACHE_DIR}"
+
+get_yaml_value() {
+  python - "$MANIFEST" "$1" "$2" <<'PY'
+import sys
+import yaml
+
+manifest, section, key = sys.argv[1:]
+
+with open(manifest, "r", encoding="utf-8") as f:
+    data = yaml.safe_load(f)
+
+print(data["repositories"][section][key])
+PY
+}
 
 sync_repo_docs() {
-  local src="$1"
-  local dst="$2"
-  shift 2
-  local extra_includes=("$@")
+  local manifest_key="$1"
+  local name="$2"
 
-  echo "  ${src} -> ${dst}"
+  local repository
+  local ref
+  local clone_dir
+  local dst_dir
+
+  repository="$(get_yaml_value "${manifest_key}" "repository")"
+  ref="$(get_yaml_value "${manifest_key}" "ref")"
+
+  clone_dir="${CACHE_DIR}/${name}"
+  dst_dir="${DOCS_DIR}/${name}"
+
+  echo "  ${repository}@${ref}"
+
+  rm -rf "${clone_dir}"
+
+  git clone \
+    --depth 1 \
+    --branch "${ref}" \
+    "https://github.com/${repository}.git" \
+    "${clone_dir}"
+
+  mkdir -p "${dst_dir}"
 
   rsync -a --delete --prune-empty-dirs \
     --include='*/' \
@@ -32,17 +68,18 @@ sync_repo_docs() {
     --include='*.pdf' \
     --include='*.drawio' \
     --include='*.py' \
-    ${extra_includes[@]+"${extra_includes[@]}"} \
     --exclude='*' \
-    "${src}/" "${dst}/"
+    "${clone_dir}/" \
+    "${dst_dir}/"
 }
 
-sync_repo_docs "../FIREQ-Client" "docs/repos/FIREQ-Client"
-sync_repo_docs "../FIREQ" "docs/repos/FIREQ"
-sync_repo_docs "../FIREQ-Server" "docs/repos/FIREQ-Server"
+sync_repo_docs "client" "FIREQ-Client"
+sync_repo_docs "firmware" "FIREQ"
+sync_repo_docs "server" "FIREQ-Server"
 
+echo
 echo "Done."
 echo "Staged documentation:"
-echo "  docs/repos/FIREQ-Client/docs/"
-echo "  docs/repos/FIREQ/docs/"
-echo "  docs/repos/FIREQ-Server/docs/"
+echo "  docs/repos/FIREQ-Client/"
+echo "  docs/repos/FIREQ/"
+echo "  docs/repos/FIREQ-Server/"
