@@ -45,10 +45,16 @@ sync_repo_docs() {
 
   rm -rf "${clone_dir}"
 
+  if [ -n "${FIREQ_DOCS_PAT:-}" ]; then
+    repo_url="https://x-access-token:${FIREQ_DOCS_PAT}@github.com/${repository}.git"
+  else
+    repo_url="https://github.com/${repository}.git"
+  fi
+
   git clone \
     --depth 1 \
     --branch "${ref}" \
-    "https://github.com/${repository}.git" \
+    "${repo_url}" \
     "${clone_dir}"
 
   mkdir -p "${dst_dir}"

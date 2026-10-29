@@ -96,8 +96,9 @@ jobs:
 
       - name: Synchronize component documentation
         working-directory: FIREQ-docs
-        run: |
-          ./scripts/sync_component_docs.sh
+ 	env:
+    	  FIREQ_DOCS_PAT: ${{ secrets.FIREQ_DOCS_PAT }}
+        run: ./scripts/sync_component_docs.sh
 
       - name: Build Sphinx documentation
         working-directory: FIREQ-docs
