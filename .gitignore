@@ -1,3 +1,4 @@
+.cache/
 .venv/
 _build/
 __pycache__/
