@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 project = "FIREQ"
 author = "QNANO - Politecnico di Torino"
-copyright = "2026, QNANO - Politecnico di Torino"
+copyright = "2025–2026, QNANO - Politecnico di Torino"
 
 
 
